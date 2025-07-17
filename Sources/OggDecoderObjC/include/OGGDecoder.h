@@ -17,6 +17,16 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)decode:(NSURL*)oggFile into:(NSURL*)outputFile completion:(void (^)(BOOL))completion;
 -(nullable NSURL*)decode:(NSURL*)oggFile;
 -(void)decode:(NSURL*)oggFile completion:(void (^)(NSURL* _Nullable outputFile))completion;
+
+// async/await exposure for Swift
+#if __has_attribute(availability)
+-(void)decode:(NSURL *)oggFile completion:(void (^)(NSURL * _Nullable))completionHandler NS_SWIFT_ASYNC_NAME(decode(oggFile:)) API_AVAILABLE(ios(15.0), macos(12.0));
+-(void)decode:(NSURL *)oggFile into:(NSURL *)outputFile completion:(void (^)(BOOL))completionHandler NS_SWIFT_ASYNC_NAME(decode(oggFile:into:)) API_AVAILABLE(ios(15.0), macos(12.0));
+#else
+-(void)decode:(NSURL *)oggFile completion:(void (^)(NSURL * _Nullable))completionHandler NS_SWIFT_ASYNC_NAME(decode(oggFile:));
+-(void)decode:(NSURL *)oggFile into:(NSURL *)outputFile completion:(void (^)(BOOL))completionHandler NS_SWIFT_ASYNC_NAME(decode(oggFile:into:));
+#endif
+
 @end
 
 NS_ASSUME_NONNULL_END

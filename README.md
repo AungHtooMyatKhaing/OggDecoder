@@ -34,9 +34,19 @@ import OggDecoder
 ```swift
 let decoder = OGGDecoder()
 let oggFile = oggFileURL()
+
+// Using completion handler
 decoder.decode(oggFile) { (savedWavUrl: URL?) in
   // Do whatever you want with URL
   // If convert was fail, returned url is nil
+}
+
+// Using async
+Task {
+  let outputUrl = await decoder.decode(oggFile)
+
+  var wavAudioUrl: URL!
+  let result = await decoder.decode(oggFile, into: wavAudioUrl)
 }
 ```
 
@@ -46,7 +56,8 @@ decoder.decode(URL) -> URL?
 decoder.decode(URL, completion: (URL?) -> Void)
 decoder.decode(URL, into: URL) -> bool
 decoder.decode(URL, into: URL, completion: (Bool) -> Void)
-
+decoder.decode(URL) async -> URL?
+decoder.decode(URL, into: URL) async -> Bool
 ```
 
 ## License

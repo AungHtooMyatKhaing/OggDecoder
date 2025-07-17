@@ -114,6 +114,33 @@ final class OggDecoderTests: XCTestCase {
         waitForExpectations(timeout: 60)
     }
 
+    @available(iOS 15.0, macOS 12.0, *)
+    func test_decodeOggAudio_asyncAwait_returnsTrue() async throws {
+        let oggAudioUrl = try fetchFileUrlFromTestBundle(filename: "TestResources/Chopin-polonaise-in-a-military", ext: "ogg")
+        let result = await decoder.decode(oggAudioUrl, into: wavAudioUrl)
+        XCTAssertTrue(result)
+    }
+
+    @available(iOS 15.0, macOS 12.0, *)
+    func test_decodeOgaAudio_asyncAwait_returnsTrue() async throws {
+        let ogaAudioUrl = try fetchFileUrlFromTestBundle(filename: "TestResources/Chopin_-_Polonaise_Op._53", ext: "oga")
+        let result = await decoder.decode(ogaAudioUrl, into: wavAudioUrl)
+        XCTAssertTrue(result)
+    }
+
+    @available(iOS 15.0, macOS 12.0, *)
+    func test_decodeOggAudio_asyncAwait_returnsFileUrl() async throws {
+        let oggAudioUrl = try fetchFileUrlFromTestBundle(filename: "TestResources/Chopin-polonaise-in-a-military", ext: "ogg")
+        let outputUrl = await decoder.decode(oggAudioUrl)
+        XCTAssertNotNil(outputUrl)
+    }
+
+    @available(iOS 15.0, macOS 12.0, *)
+    func test_decodeOgaAudio_asyncAwait_returnsFileUrl() async throws {
+        let ogaAudioUrl = try fetchFileUrlFromTestBundle(filename: "TestResources/Chopin_-_Polonaise_Op._53", ext: "oga")
+        let outputUrl = await decoder.decode(ogaAudioUrl)
+        XCTAssertNotNil(outputUrl)
+    }
     
     private func fetchFileUrlFromTestBundle(filename: String, ext: String) throws -> URL {
         let bundle = Bundle.module
